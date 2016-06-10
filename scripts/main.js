@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom')
 
 // StorePicker
 // This will let us create a <StorePicker /> element
@@ -10,3 +11,5 @@ var StorePicker = React.createClass({
     )
   }
 });
+
+ReactDOM.render(<StorePicker/>, document.getElementById('main'));
