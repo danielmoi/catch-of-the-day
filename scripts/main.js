@@ -66,8 +66,16 @@ var App = React.createClass({
 // Fish
 var Fish = React.createClass({
   render: function() {
+    var details = this.props.details;
     return (
-      <li>{ this.props.index }</li>
+      <li className="menu-fish">
+        <img src={ details.image } alt={ details.name }/>
+        <h3 className="fish-name">
+          { details.name }
+          <span className="price">{ details.price }</span>
+        </h3>
+        <p> { details.desc }</p>
+      </li>
     )
   }
 });
