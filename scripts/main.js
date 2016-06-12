@@ -36,11 +36,19 @@ var App = React.createClass({
       fishes: require('./sample-fishes')
     });
   },
+  _renderFish: function(key) {
+    return (
+      <li>Welcome {key}</li>
+    )
+  },
   render: function() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market"/>
+          <ul className="list-of-fishes">
+            { Object.keys(this.state.fishes).map(this._renderFish) }
+          </ul>
         </div>
         <Order />
         <Inventory
