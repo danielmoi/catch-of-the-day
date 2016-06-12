@@ -38,7 +38,11 @@ var App = React.createClass({
   },
   _renderFish: function(key) {
     return (
-      <li>Welcome {key}</li>
+      <Fish
+        key={ key }
+        index={ key }
+        details={ this.state.fishes[key] } />
+
     )
   },
   render: function() {
@@ -57,7 +61,16 @@ var App = React.createClass({
       </div>
     )
   }
-})
+});
+
+// Fish
+var Fish = React.createClass({
+  render: function() {
+    return (
+      <li>{ this.props.index }</li>
+    )
+  }
+});
 
 
 // Add Fish Form
