@@ -31,6 +31,11 @@ var App = React.createClass({
     this.setState({ fishes: this.state.fishes });
 
   },
+  _loadSamples: function() {
+    this.setState({
+      fishes: require('./sample-fishes')
+    });
+  },
   render: function() {
     return (
       <div className="catch-of-the-day">
@@ -38,7 +43,9 @@ var App = React.createClass({
           <Header tagline="Fresh Seafood Market"/>
         </div>
         <Order />
-        <Inventory _addFish={ this._addFish }/>
+        <Inventory
+          _addFish={ this._addFish }
+          _loadSamples={ this._loadSamples }/>
       </div>
     )
   }
@@ -47,7 +54,7 @@ var App = React.createClass({
 
 // Add Fish Form
 var AddFishForm = React.createClass({
-  createFish: function(e) {
+  _createFish: function(e) {
     e.preventDefault();
 
     // Take data from form and create an object
@@ -67,7 +74,7 @@ var AddFishForm = React.createClass({
   },
   render: function() {
     return (
-      <form className="fish-edit" ref="fishForm" onSubmit={ this.createFish }>
+      <form className="fish-edit" ref="fishForm" onSubmit={ this._createFish }>
         <input type="text" ref="name" placeholder="Fish Name"/>
         <input type="text" ref="price" placeholder="Fish Price"/>
         <select ref="status">
@@ -117,6 +124,7 @@ var Inventory = React.createClass({
       <div>
         <h2>INVENTORY</h2>
         <AddFishForm { ...this.props }/>
+        <button onClick={ this.props._loadSamples }>Load Sample Fishes</button>
       </div>
     )
   }
