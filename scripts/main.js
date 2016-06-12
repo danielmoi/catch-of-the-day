@@ -38,7 +38,7 @@ var App = React.createClass({
           <Header tagline="Fresh Seafood Market"/>
         </div>
         <Order />
-        <Inventory />
+        <Inventory _addFish={ this._addFish }/>
       </div>
     )
   }
@@ -59,8 +59,8 @@ var AddFishForm = React.createClass({
       image: this.refs.image.value
     };
 
-    console.log(fish);
     // Add fish to App State
+    this.props._addFish(fish);
   },
   render: function() {
     return (
@@ -113,7 +113,7 @@ var Inventory = React.createClass({
     return (
       <div>
         <h2>INVENTORY</h2>
-        <AddFishForm />
+        <AddFishForm { ...this.props }/>
       </div>
     )
   }
