@@ -14,6 +14,23 @@ var h = require('./helpers.js');
 
 // App
 var App = React.createClass({
+  getInitialState: function() {
+    return {
+      fishes: {},
+      order: {}
+    }
+  },
+  _addFish: function(fish) {
+    // create unique key for fish
+    var timeStamp = new Date().getTime();
+
+    // update state object
+    this.state.fishes['fish-' + timeStamp] = fish;
+
+    // set state
+    this.setState({ fishes: this.state.fishes });
+
+  },
   render: function() {
     return (
       <div className="catch-of-the-day">
