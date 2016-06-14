@@ -59,7 +59,10 @@ var App = React.createClass({
             { Object.keys(this.state.fishes).map(this._renderFish) }
           </ul>
         </div>
-        <Order />
+        <Order
+          fishes={ this.state.fishes }
+          order={ this.state.order }/>
+
         <Inventory
           _addFish={ this._addFish }
           _loadSamples={ this._loadSamples }/>
@@ -155,8 +158,26 @@ var Header = React.createClass({
 // Order
 var Order = React.createClass({
   render: function() {
+    var orderIDs = Object.keys(this.props.order);
+    var total = orderIDs.reduce((total, next) => {
+      var fish = this.props.fishes[next];
+      var count = this.props.order[next];
+      var isAvailable = fish && fish.status === 'available';
+
+      if (fish && isAvailable) {
+        return total + (count * parseInt(fish.price) || 0);
+      }
+
+      return total;
+    }, 0);
     return (
-      <p>ORDER</p>
+      <div className="order-wrap">
+        <h2 className="order-title">Your Order</h2>
+        <ul className="order">
+          <li className="total">
+            <strong>Total: </strong>{total}</li>
+        </ul>
+      </div>
     )
   }
 });
