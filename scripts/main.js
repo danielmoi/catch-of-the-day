@@ -12,6 +12,9 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 var h = require('./helpers.js');
 
+var Rebase = require('re-base');
+var base = Rebase.createClass('https://catch-4000.firebaseio.com');
+
 // App
 var App = React.createClass({
   getInitialState: function() {
@@ -19,6 +22,12 @@ var App = React.createClass({
       fishes: {},
       order: {}
     }
+  },
+  componentDidMount: function() {
+    base.syncState(this.props.params.storeId + '/fishes', {
+      context: this,
+      state: 'fishes'
+    });
   },
   _addFish: function(fish) {
     // create unique key for fish
