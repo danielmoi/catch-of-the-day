@@ -15,8 +15,13 @@ var h = require('./helpers.js');
 var Rebase = require('re-base');
 var base = Rebase.createClass('https://catch-4000.firebaseio.com');
 
+var Catalyst = require('react-catalyst');
+
+
 // App
 var App = React.createClass({
+  mixins: [ Catalyst.LinkedStateMixin ],
+
   getInitialState: function() {
     return {
       fishes: {},
@@ -85,7 +90,9 @@ var App = React.createClass({
 
         <Inventory
           _addFish={ this._addFish }
-          _loadSamples={ this._loadSamples }/>
+          _loadSamples={ this._loadSamples }
+          fishes={ this.state.fishes }
+          linkState={ this.linkState }/>
       </div>
     )
   }
@@ -224,10 +231,19 @@ var Order = React.createClass({
 
 // Inventory
 var Inventory = React.createClass({
+  _renderInventory: function(key) {
+    var linkState = this.props.linkState;
+    return (
+      <div className="fish-edit" key={ key }>
+        <input type="text" valueLink={linkState('fishes.' + key +     '.name')}/>
+      </div>
+    )
+  },
   render: function() {
     return (
       <div>
         <h2>INVENTORY</h2>
+        { Object.keys(this.props.fishes).map(this._renderInventory) }
         <AddFishForm { ...this.props }/>
         <button onClick={ this.props._loadSamples }>Load Sample Fishes</button>
       </div>
