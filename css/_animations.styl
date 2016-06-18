@@ -2,11 +2,11 @@
   Possible Animations:
   enter
   leave
-  appear Must set transitionAppear={true} on animation component 
+  appear Must set transitionAppear={true} on animation component
 */
 
 .order-enter
-  transition all 0.5s
+  transition all 5s
   transform translateX(-120%)
   max-height 0
   padding 0 !important
@@ -31,9 +31,9 @@
   &.count-enter-active
     opacity 1
     transform translateY(0)
-    
-    
-  
+
+
+
 .count-leave
   transition all 0.25s
   left 0
@@ -42,5 +42,3 @@
   position absolute !important
   &.count-leave-active
     transform translateY(-100%)
-    
-  
