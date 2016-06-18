@@ -61,13 +61,19 @@ var App = React.createClass({
       this.state.fishes[key] = null;
       this.setState({
         fishes: this.state.fishes
-      })  
+      })
     }
 
   },
   _addToOrder: function(key) {
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({ order: this.state.order });
+  },
+  _removeFromOrder: function(key) {
+    delete this.state.order[key];
+    this.setState({
+      order: this.state.order
+    });
   },
   _loadSamples: function() {
     this.setState({
@@ -95,14 +101,15 @@ var App = React.createClass({
         </div>
         <Order
           fishes={ this.state.fishes }
-          order={ this.state.order }/>
+          order={ this.state.order }
+          _removeFromOrder={ this._removeFromOrder }/>
 
         <Inventory
           _addFish={ this._addFish }
           _loadSamples={ this._loadSamples }
           fishes={ this.state.fishes }
           linkState={ this.linkState }
-          _removeFish={ this._removeFish }/>
+          _removeFish={ this._removeFish } />
       </div>
     )
   }
@@ -197,10 +204,11 @@ var Order = React.createClass({
   renderOrder: function(key) {
     var fish = this.props.fishes[key];
     var count = this.props.order[key];
+    var removeButton = <button onClick={ this.props._removeFromOrder.bind(null, key) }>&times;</button>
 
     if (!fish) {
       return (
-        <li key={ key }>Sorry, fish no longer available!</li>
+        <li key={ key }>Sorry, fish no longer available! { removeButton }</li>
       )
     }
 
@@ -209,6 +217,7 @@ var Order = React.createClass({
       <li key={ key }>
         { count } lbs – { fish.name }
         <span className="price">{ h.formatPrice(count * fish.price) }</span>
+        { removeButton }
       </li>
     )
   },
