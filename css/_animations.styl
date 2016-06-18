@@ -6,7 +6,7 @@
 */
 
 .order-enter
-  transition all 5s
+  transition all 0.5s
   transform translateX(-120%)
   max-height 0
   padding 0 !important
@@ -27,10 +27,10 @@
 
 .count-enter
   transition all 0.25s
-  transform translateY(100%)
+  transform translateY(100%) // start it off screen
   &.count-enter-active
     opacity 1
-    transform translateY(0)
+    transform translateY(0) // move it in
 
 
 
@@ -38,7 +38,7 @@
   transition all 0.25s
   left 0
   bottom 0
-  transform translateY(0)
+  transform translateY(0) // start it where it already is
   position absolute !important
   &.count-leave-active
-    transform translateY(-100%)
+    transform translateY(-100%) // move it off screen
