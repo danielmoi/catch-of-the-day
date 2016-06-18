@@ -56,6 +56,15 @@ var App = React.createClass({
     this.setState({ fishes: this.state.fishes });
 
   },
+  _removeFish: function(key) {
+    if (confirm("Are you sure you want to remove this fish?")) {
+      this.state.fishes[key] = null;
+      this.setState({
+        fishes: this.state.fishes
+      })  
+    }
+
+  },
   _addToOrder: function(key) {
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({ order: this.state.order });
@@ -92,7 +101,8 @@ var App = React.createClass({
           _addFish={ this._addFish }
           _loadSamples={ this._loadSamples }
           fishes={ this.state.fishes }
-          linkState={ this.linkState }/>
+          linkState={ this.linkState }
+          _removeFish={ this._removeFish }/>
       </div>
     )
   }
@@ -243,6 +253,7 @@ var Inventory = React.createClass({
 
         <textarea valueLink={ linkState('fishes.' + key + '.desc')}></textarea>
         <input type="text" valueLink={linkState('fishes.' + key +     '.image')}/>
+        <button onClick={ this.props._removeFish.bind(null, key) }>Remove Fish</button>
 
       </div>
     )
