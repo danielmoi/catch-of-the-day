@@ -197,8 +197,12 @@ var Header = React.createClass({
         </h3>
       </header>
     )
+  },
+  propTypes: {
+    tagline: React.PropTypes.string.isRequired
   }
 });
+
 
 // Order
 var Order = React.createClass({
@@ -259,6 +263,11 @@ var Order = React.createClass({
 
       </div>
     )
+  },
+  propTypes: {
+    order: React.PropTypes.object.isRequired,
+    fishes: React.PropTypes.object.isRequired,
+    _removeFromOrder: React.PropTypes.func.isRequired
   }
 });
 
@@ -291,6 +300,13 @@ var Inventory = React.createClass({
         <button onClick={ this.props._loadSamples }>Load Sample Fishes</button>
       </div>
     )
+  },
+  propTypes: {
+    fishes: React.PropTypes.object.isRequired,
+    _loadSamples: React.PropTypes.func.isRequired,
+    _addFish: React.PropTypes.func.isRequired,
+    _removeFish: React.PropTypes.func.isRequired,
+    linkState: React.PropTypes.func.isRequired
   }
 });
 
