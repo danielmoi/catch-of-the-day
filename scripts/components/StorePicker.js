@@ -1,11 +1,13 @@
 import React from 'react';
 import { History } from 'react-router';
 import reactMixin from 'react-mixin';
+import autobind from 'autobind-decorator';
 
 import h from '../helpers';
 
 class StorePicker extends React.Component {
 
+  @autobind
   goToStore(e) {
     e.preventDefault();
 
