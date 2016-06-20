@@ -5,9 +5,9 @@ import autobind from 'autobind-decorator';
 
 import h from '../helpers';
 
+@autobind
 class StorePicker extends React.Component {
 
-  @autobind
   goToStore(e) {
     e.preventDefault();
 
