@@ -7,6 +7,22 @@ import AddFishForm from './AddFishForm';
 @autobind
 class Inventory extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      uid: ''
+    }
+  }
+
+  _renderLogin() {
+    return (
+      <nav className="login">
+        <h2>Inventory</h2>
+          <button className="github">Log in with GitHub</button>
+      </nav>
+    )
+  }
+
   _renderInventory(key) {
     var linkState = this.props.linkState;
     return (
@@ -27,6 +43,14 @@ class Inventory extends React.Component {
   }
 
   render() {
+    // first check if they aren't logged in
+    if (!this.state.uid) {
+      return (
+        <div>
+          { this._renderLogin() }
+        </div>
+      )
+    }
     return (
       <div>
         <h2>INVENTORY</h2>
