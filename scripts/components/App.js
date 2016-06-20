@@ -3,22 +3,27 @@ import Catalyst from 'react-catalyst';
 import Rebase from 're-base';
 var base = Rebase.createClass('https://catch-4000.firebaseio.com');
 
+import reactMixin from 'react-mixin';
+import autobind from 'autobind-decorator';
+
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
 import Fish from './Fish';
 
+@autobind
+class App extends React.Component {
 
-var App = React.createClass({
-  mixins: [ Catalyst.LinkedStateMixin ],
+  constructor() {
+    super();
 
-  getInitialState: function() {
-    return {
+    this.state = {
       fishes: {},
       order: {}
     }
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     base.syncState(this.props.params.storeId + '/fishes', {
       context: this,
       state: 'fishes'
@@ -31,11 +36,13 @@ var App = React.createClass({
         order: JSON.parse(localStorageRef)
       })
     }
-  },
-  componentWillUpdate: function(nextProps, nextState) {
+  }
+
+  componentWillUpdate(nextProps, nextState) {
     localStorage.setItem('order-' + this.props.params.storeId, JSON.stringify(nextState.order));
-  },
-  _addFish: function(fish) {
+  }
+
+  _addFish(fish) {
     // create unique key for fish
     var timeStamp = new Date().getTime();
 
@@ -45,8 +52,9 @@ var App = React.createClass({
     // set state
     this.setState({ fishes: this.state.fishes });
 
-  },
-  _removeFish: function(key) {
+  }
+
+  _removeFish(key) {
     if (confirm("Are you sure you want to remove this fish?")) {
       this.state.fishes[key] = null;
       this.setState({
@@ -54,23 +62,27 @@ var App = React.createClass({
       })
     }
 
-  },
-  _addToOrder: function(key) {
+  }
+
+  _addToOrder(key) {
     this.state.order[key] = this.state.order[key] + 1 || 1;
     this.setState({ order: this.state.order });
-  },
-  _removeFromOrder: function(key) {
+  }
+
+  _removeFromOrder(key) {
     delete this.state.order[key];
     this.setState({
       order: this.state.order
     });
-  },
-  _loadSamples: function() {
+  }
+
+  _loadSamples() {
     this.setState({
       fishes: require('../sample-fishes')
     });
-  },
-  _renderFish: function(key) {
+  }
+
+  _renderFish(key) {
     return (
       <Fish
         key={ key }
@@ -79,8 +91,9 @@ var App = React.createClass({
         _addToOrder={ this._addToOrder }/>
 
     )
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
@@ -103,6 +116,8 @@ var App = React.createClass({
       </div>
     )
   }
-});
+}
+
+reactMixin.onClass(App, Catalyst.LinkedStateMixin)
 
 export default App;
